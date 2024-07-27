@@ -103,7 +103,8 @@ class __$$CityDtoImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(fieldRename: FieldRename.snake)
 class _$CityDtoImpl implements _CityDto {
   const _$CityDtoImpl({this.name, this.country});
 

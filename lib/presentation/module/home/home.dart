@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/presentation/module/home/location.dart';
+import 'package:weather_app/presentation/module/home/model/location_model.dart';
 import '../../base/screen/stateful_screen.dart';
 import 'bloc/home_bloc.dart';
 
@@ -16,7 +17,7 @@ class HomeScreen extends StatefulScreen<HomeBloc> {
 
 class _HomeScreenState extends ScreenState<HomeBloc>
     with TickerProviderStateMixin {
-  late String city;
+  late LocationModel locationData;
   @override
   void initState() {
     getUserLocation();
@@ -24,7 +25,9 @@ class _HomeScreenState extends ScreenState<HomeBloc>
   }
 
   getUserLocation() async {
-    city = await UserLocation.determinePosition();
+    locationData = await UserLocation.determinePosition();
+    bloc.add(GetCurrentWeatherEvent(
+        lat: locationData.latitude, log: locationData.longitude));
   }
 
   @override

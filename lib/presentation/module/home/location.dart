@@ -1,9 +1,10 @@
 import 'dart:developer';
 import 'package:geocode/geocode.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:weather_app/presentation/module/home/model/location_model.dart';
 
 class UserLocation {
-  static Future<String> determinePosition() async {
+  static Future<LocationModel> determinePosition() async {
     bool serviceEnabled;
     GeoCode geoCode = GeoCode();
 
@@ -29,6 +30,9 @@ class UserLocation {
     Address address = await geoCode.reverseGeocoding(
         latitude: position.latitude, longitude: position.longitude);
     log(address.city.toString());
-    return address.city.toString();
+    return LocationModel(
+        city: address.city.toString(),
+        latitude: position.latitude,
+        longitude: position.longitude);
   }
 }

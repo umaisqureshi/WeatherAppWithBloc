@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
-import 'package:weather_app/infrastucture/provider/splash_route_provider.dart';
+import 'package:weather_app/infrastucture/provider/home_route_provider.dart';
 import 'package:weather_app/infrastucture/routing/transition_factory.dart';
 import 'package:weather_app/presentation/routes/routes.dart';
 import 'route_screen_provider.dart';
