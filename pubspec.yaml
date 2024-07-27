@@ -49,6 +49,8 @@ dependencies:
   cached_network_image: ^3.2.2
   freezed_annotation: ^2.2.0
   json_annotation: ^4.8.0
+  geolocator: ^12.0.0
+  geocode: ^1.0.3
 
 
 dev_dependencies:

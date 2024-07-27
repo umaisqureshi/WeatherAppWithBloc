@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
-import 'package:weather_app/infrastucture/routing/provider/splash_route_provider.dart';
+import 'package:weather_app/infrastucture/provider/splash_route_provider.dart';
 import 'package:weather_app/infrastucture/routing/transition_factory.dart';
 import 'package:weather_app/presentation/routes/routes.dart';
 import 'route_screen_provider.dart';
@@ -9,7 +9,7 @@ import 'route_screen_provider.dart';
 @lazySingleton
 class AppRouteFactory {
   final TransitionFactory transitionFactory;
-  final SplashRouteProvider splashRouteProvider;
+  final HomeRouteProvider splashRouteProvider;
   const AppRouteFactory({
     required this.splashRouteProvider,
     required this.transitionFactory,
