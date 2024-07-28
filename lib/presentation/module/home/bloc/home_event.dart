@@ -8,7 +8,9 @@ abstract class HomeEvent extends Equatable {
 class GetCurrentWeatherEvent extends HomeEvent {
   final double lat;
   final double log;
-  const GetCurrentWeatherEvent({required this.lat, required this.log});
+  final String city;
+  const GetCurrentWeatherEvent(
+      {required this.lat, required this.log, required this.city});
   @override
   List<Object?> get props => [lat, log];
 }

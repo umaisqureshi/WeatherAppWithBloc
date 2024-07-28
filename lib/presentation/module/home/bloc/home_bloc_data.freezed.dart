@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$HomeBlocData {
   WeeklyWeatherEntity? get weeklyData => throw _privateConstructorUsedError;
+  LocationModel? get locationData => throw _privateConstructorUsedError;
   CurrentWeatherEntity? get currentWeatherData =>
       throw _privateConstructorUsedError;
 
@@ -33,6 +34,7 @@ abstract class $HomeBlocDataCopyWith<$Res> {
   @useResult
   $Res call(
       {WeeklyWeatherEntity? weeklyData,
+      LocationModel? locationData,
       CurrentWeatherEntity? currentWeatherData});
 }
 
@@ -50,6 +52,7 @@ class _$HomeBlocDataCopyWithImpl<$Res, $Val extends HomeBlocData>
   @override
   $Res call({
     Object? weeklyData = freezed,
+    Object? locationData = freezed,
     Object? currentWeatherData = freezed,
   }) {
     return _then(_value.copyWith(
@@ -57,6 +60,10 @@ class _$HomeBlocDataCopyWithImpl<$Res, $Val extends HomeBlocData>
           ? _value.weeklyData
           : weeklyData // ignore: cast_nullable_to_non_nullable
               as WeeklyWeatherEntity?,
+      locationData: freezed == locationData
+          ? _value.locationData
+          : locationData // ignore: cast_nullable_to_non_nullable
+              as LocationModel?,
       currentWeatherData: freezed == currentWeatherData
           ? _value.currentWeatherData
           : currentWeatherData // ignore: cast_nullable_to_non_nullable
@@ -75,6 +82,7 @@ abstract class _$$HomeBlocDataImplCopyWith<$Res>
   @useResult
   $Res call(
       {WeeklyWeatherEntity? weeklyData,
+      LocationModel? locationData,
       CurrentWeatherEntity? currentWeatherData});
 }
 
@@ -90,6 +98,7 @@ class __$$HomeBlocDataImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? weeklyData = freezed,
+    Object? locationData = freezed,
     Object? currentWeatherData = freezed,
   }) {
     return _then(_$HomeBlocDataImpl(
@@ -97,6 +106,10 @@ class __$$HomeBlocDataImplCopyWithImpl<$Res>
           ? _value.weeklyData
           : weeklyData // ignore: cast_nullable_to_non_nullable
               as WeeklyWeatherEntity?,
+      locationData: freezed == locationData
+          ? _value.locationData
+          : locationData // ignore: cast_nullable_to_non_nullable
+              as LocationModel?,
       currentWeatherData: freezed == currentWeatherData
           ? _value.currentWeatherData
           : currentWeatherData // ignore: cast_nullable_to_non_nullable
@@ -108,16 +121,19 @@ class __$$HomeBlocDataImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$HomeBlocDataImpl implements _HomeBlocData {
-  const _$HomeBlocDataImpl({this.weeklyData, this.currentWeatherData});
+  const _$HomeBlocDataImpl(
+      {this.weeklyData, this.locationData, this.currentWeatherData});
 
   @override
   final WeeklyWeatherEntity? weeklyData;
+  @override
+  final LocationModel? locationData;
   @override
   final CurrentWeatherEntity? currentWeatherData;
 
   @override
   String toString() {
-    return 'HomeBlocData(weeklyData: $weeklyData, currentWeatherData: $currentWeatherData)';
+    return 'HomeBlocData(weeklyData: $weeklyData, locationData: $locationData, currentWeatherData: $currentWeatherData)';
   }
 
   @override
@@ -127,12 +143,15 @@ class _$HomeBlocDataImpl implements _HomeBlocData {
             other is _$HomeBlocDataImpl &&
             (identical(other.weeklyData, weeklyData) ||
                 other.weeklyData == weeklyData) &&
+            (identical(other.locationData, locationData) ||
+                other.locationData == locationData) &&
             (identical(other.currentWeatherData, currentWeatherData) ||
                 other.currentWeatherData == currentWeatherData));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, weeklyData, currentWeatherData);
+  int get hashCode =>
+      Object.hash(runtimeType, weeklyData, locationData, currentWeatherData);
 
   @JsonKey(ignore: true)
   @override
@@ -144,10 +163,13 @@ class _$HomeBlocDataImpl implements _HomeBlocData {
 abstract class _HomeBlocData implements HomeBlocData {
   const factory _HomeBlocData(
       {final WeeklyWeatherEntity? weeklyData,
+      final LocationModel? locationData,
       final CurrentWeatherEntity? currentWeatherData}) = _$HomeBlocDataImpl;
 
   @override
   WeeklyWeatherEntity? get weeklyData;
+  @override
+  LocationModel? get locationData;
   @override
   CurrentWeatherEntity? get currentWeatherData;
   @override

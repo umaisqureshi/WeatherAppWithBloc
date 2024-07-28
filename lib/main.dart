@@ -24,8 +24,6 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     appRouter = GetIt.instance.get();
   }
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(

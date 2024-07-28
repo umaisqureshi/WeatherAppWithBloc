@@ -1,9 +1,7 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:weather_app/presentation/module/home/component/current_weather_component.dart';
 import 'package:weather_app/presentation/module/home/location.dart';
 import 'package:weather_app/presentation/module/home/model/location_model.dart';
 import '../../base/screen/stateful_screen.dart';
@@ -32,9 +30,11 @@ class _HomeScreenState extends ScreenState<HomeBloc>
   getUserLocation() async {
     locationData = await UserLocation.determinePosition();
     bloc.add(GetCurrentWeatherEvent(
-        lat: locationData.latitude, log: locationData.longitude));
-    bloc.add(GetWeeklyWeatherEvent(
-        lat: locationData.latitude, log: locationData.longitude));
+        city: locationData.city,
+        lat: locationData.latitude,
+        log: locationData.longitude));
+    // bloc.add(GetWeeklyWeatherEvent(
+    //     lat: locationData.latitude, log: locationData.longitude));
   }
 
   @override
@@ -49,17 +49,15 @@ class _HomeScreenState extends ScreenState<HomeBloc>
       ),
       backgroundColor: Colors.black,
       extendBodyBehindAppBar: true,
-      body: HomeScreenVerticalView(
-        location: locationData.city,
-      ),
+      body: const HomeScreenVerticalView(),
     );
   }
 }
 
 class HomeScreenVerticalView extends StatefulWidget {
-  final String location;
-
-  const HomeScreenVerticalView({super.key, required this.location});
+  const HomeScreenVerticalView({
+    super.key,
+  });
 
   @override
   State<HomeScreenVerticalView> createState() => _HomeScreenVerticalViewState();
@@ -106,53 +104,9 @@ class _HomeScreenVerticalViewState extends State<HomeScreenVerticalView> {
                 decoration: const BoxDecoration(color: Colors.transparent),
               ),
             ),
-            WeatherBodyWidget(
-              location: widget.location,
-            )
+            const CurrentWeatherComponent()
           ],
         ),
-      ),
-    );
-  }
-}
-
-
-class WeatherBodyWidget extends StatelessWidget {
-  final String location;
-  const WeatherBodyWidget({
-    super.key,
-    required this.location,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.sizeOf(context).height,
-      width: MediaQuery.sizeOf(context).width,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "📍$location",
-            style: GoogleFonts.raleway(
-              fontSize: 18,
-              color: Colors.white,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          Text(
-            "Sunday, 28 2024",
-            style: GoogleFonts.arima(
-              fontSize: 14,
-              color: Colors.white,
-              fontWeight: FontWeight.w200,
-            ),
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          Image.asset("assets/images/png/2.png"),
-        ],
       ),
     );
   }

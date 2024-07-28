@@ -4,11 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:weather_app/domain/base/use_case_result.dart';
 import 'package:weather_app/domain/city/get_city_use_case.dart';
+import 'package:weather_app/domain/weather/current/current_weather_entity.dart';
 import 'package:weather_app/domain/weather/current/current_weather_request.dart';
 import 'package:weather_app/domain/weather/current/get_current_weather_use_case.dart';
 import 'package:weather_app/domain/weather/weekly/get_weekly_weather_use_case.dart';
 import 'package:weather_app/domain/weather/weekly/weekly_request.dart';
 import 'package:weather_app/presentation/module/home/bloc/home_bloc_data.dart';
+import 'package:weather_app/presentation/module/home/model/location_model.dart';
 import '../../../base/bloc/base_bloc.dart';
 import 'package:intl/intl.dart';
 part 'home_event.dart';
@@ -30,6 +32,9 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
         _weeklyWeatherUseCase = weeklyWeatherUseCase,
         super(HomeInitial()) {
     on<GetCurrentWeatherEvent>((event, emit) async {
+      blocData = blocData.copyWith(
+          locationData: LocationModel(
+              city: event.city, latitude: event.lat, longitude: event.log));
       await _getCurrentWeather(event.lat, event.log, emit);
     });
     on<GetWeeklyWeatherEvent>((event, emit) async {
@@ -45,6 +50,8 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
         request,
         UseCaseResult(onSuccess: (data) {
           blocData = blocData.copyWith(currentWeatherData: data);
+          emit(CurrentWeatherState(
+              currentWether: data, city: blocData.locationData!.city));
         }, onError: (error) {
           print(error.toString());
         }));
