@@ -40,7 +40,7 @@ _$DailyDataDtoImpl _$$DailyDataDtoImplFromJson(Map<String, dynamic> json) =>
                   ?.map((e) => (e as num).toDouble())
                   .toList() ??
               const [],
-      windSpeed10mMax: (json['wind_speed10m_max'] as List<dynamic>?)
+      windSpeed10mMax: (json['wind_speed_10m_max'] as List<dynamic>?)
               ?.map((e) => (e as num).toDouble())
               .toList() ??
           const [],
@@ -48,10 +48,11 @@ _$DailyDataDtoImpl _$$DailyDataDtoImplFromJson(Map<String, dynamic> json) =>
               ?.map((e) => (e as num).toInt())
               .toList() ??
           const [],
-      relativeHumidity2mMax: (json['relative_humidity2m_max'] as List<dynamic>?)
-              ?.map((e) => (e as num).toInt())
-              .toList() ??
-          const [],
+      relativeHumidity2mMax:
+          (json['relative_humidity_2m_max'] as List<dynamic>?)
+                  ?.map((e) => (e as num).toInt())
+                  .toList() ??
+              const [],
     );
 
 Map<String, dynamic> _$$DailyDataDtoImplToJson(_$DailyDataDtoImpl instance) =>
@@ -59,7 +60,7 @@ Map<String, dynamic> _$$DailyDataDtoImplToJson(_$DailyDataDtoImpl instance) =>
       'time': instance.time.map((e) => e.toIso8601String()).toList(),
       'apparent_temperature_max': instance.apparentTemperatureMax,
       'apparent_temperature_min': instance.apparentTemperatureMin,
-      'wind_speed10m_max': instance.windSpeed10mMax,
+      'wind_speed_10m_max': instance.windSpeed10mMax,
       'weather_code': instance.weatherCode,
-      'relative_humidity2m_max': instance.relativeHumidity2mMax,
+      'relative_humidity_2m_max': instance.relativeHumidity2mMax,
     };

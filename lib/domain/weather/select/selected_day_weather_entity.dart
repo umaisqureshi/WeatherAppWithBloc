@@ -1,18 +1,18 @@
 import 'package:weather_app/domain/base/entity.dart';
 
-class CurrentWeatherEntity extends Entity {
+class SelectedDayWeatherEntity extends Entity {
   double? latitude;
   double? longitude;
-  CurrentWeatherDetails? current;
+  SelectedDayWeatherDetails? current;
 
-  CurrentWeatherEntity({
+  SelectedDayWeatherEntity({
     required this.latitude,
     required this.longitude,
     required this.current,
   });
 }
 
-class CurrentWeatherDetails extends Entity {
+class SelectedDayWeatherDetails extends Entity {
   String? time;
   double? apparentTemperature;
   double? windSpeed10M;
@@ -20,7 +20,7 @@ class CurrentWeatherDetails extends Entity {
   int? isDay;
   int? relativeHumidity2M;
 
-  CurrentWeatherDetails({
+  SelectedDayWeatherDetails({
     this.time,
     this.apparentTemperature,
     this.windSpeed10M,

@@ -10,9 +10,9 @@ import 'package:injectable/injectable.dart' as _i2;
 import 'package:weather_app/data/remote/api_service.dart' as _i6;
 import 'package:weather_app/data/repository/weather_datasource.dart' as _i5;
 import 'package:weather_app/data/repository/weather_repo.dart' as _i7;
-import 'package:weather_app/domain/city/get_city_use_case.dart' as _i10;
-import 'package:weather_app/domain/weather/current/get_current_weather_use_case.dart'
-    as _i9;
+import 'package:weather_app/domain/city/get_city_use_case.dart' as _i9;
+import 'package:weather_app/domain/weather/select/get_selected_day_weather_use_case.dart'
+    as _i10;
 import 'package:weather_app/domain/weather/weekly/get_weekly_weather_use_case.dart'
     as _i8;
 import 'package:weather_app/infrastucture/provider/home_route_provider.dart'
@@ -46,19 +46,20 @@ extension GetItInjectableX on _i1.GetIt {
         _i7.WeatherRepository(weatherDataSource: gh<_i5.WeatherDataSource>()));
     gh.factory<_i8.WeeklyWeatherUseCase>(() =>
         _i8.WeeklyWeatherUseCase(repository: gh<_i7.WeatherRepository>()));
-    gh.factory<_i9.CurrentWeatherUseCase>(() =>
-        _i9.CurrentWeatherUseCase(repository: gh<_i7.WeatherRepository>()));
-    gh.factory<_i10.GetCitiesByQueryUseCase>(() =>
-        _i10.GetCitiesByQueryUseCase(repository: gh<_i7.WeatherRepository>()));
+    gh.factory<_i9.GetCitiesByQueryUseCase>(() =>
+        _i9.GetCitiesByQueryUseCase(repository: gh<_i7.WeatherRepository>()));
+    gh.factory<_i10.SelectedDayWeatherUseCase>(() =>
+        _i10.SelectedDayWeatherUseCase(
+            repository: gh<_i7.WeatherRepository>()));
     gh.factory<_i11.HomeBloc>(() => _i11.HomeBloc(
-          currentWeatherUseCase: gh<_i9.CurrentWeatherUseCase>(),
-          getCitiesByQueryUseCase: gh<_i10.GetCitiesByQueryUseCase>(),
+          currentWeatherUseCase: gh<_i10.SelectedDayWeatherUseCase>(),
+          getCitiesByQueryUseCase: gh<_i9.GetCitiesByQueryUseCase>(),
           weeklyWeatherUseCase: gh<_i8.WeeklyWeatherUseCase>(),
         ));
     gh.factory<_i12.HomeRouteProvider>(() => _i12.HomeRouteProvider(
           bloc: gh<_i11.HomeBloc>(),
-          currentWeatherUseCase: gh<_i9.CurrentWeatherUseCase>(),
-          getCitiesByQueryUseCase: gh<_i10.GetCitiesByQueryUseCase>(),
+          currentWeatherUseCase: gh<_i10.SelectedDayWeatherUseCase>(),
+          getCitiesByQueryUseCase: gh<_i9.GetCitiesByQueryUseCase>(),
           weeklyWeatherUseCase: gh<_i8.WeeklyWeatherUseCase>(),
         ));
     gh.lazySingleton<_i13.AppRouteFactory>(() => _i13.AppRouteFactory(

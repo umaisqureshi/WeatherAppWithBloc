@@ -30,11 +30,10 @@ class _HomeScreenState extends ScreenState<HomeBloc>
   getUserLocation() async {
     locationData = await UserLocation.determinePosition();
     bloc.add(GetCurrentWeatherEvent(
+        time: DateTime.now(),
         city: locationData.city,
         lat: locationData.latitude,
         log: locationData.longitude));
-    // bloc.add(GetWeeklyWeatherEvent(
-    //     lat: locationData.latitude, log: locationData.longitude));
   }
 
   @override
@@ -104,7 +103,7 @@ class _HomeScreenVerticalViewState extends State<HomeScreenVerticalView> {
                 decoration: const BoxDecoration(color: Colors.transparent),
               ),
             ),
-            const CurrentWeatherComponent()
+            const CurrentWeatherComponent(),
           ],
         ),
       ),

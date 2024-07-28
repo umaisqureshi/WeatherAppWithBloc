@@ -18,6 +18,7 @@ class WeeklyWeatherEntityMapper
 
 List<DailyData> mapDailyDataDtoToModel(DailyDataDto dto) {
   final List<DailyData> dailyData = [];
+
   for (int i = 0; i < dto.time.length; i++) {
     dailyData.add(
       DailyData(

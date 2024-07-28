@@ -213,10 +213,14 @@ DailyDataDto _$DailyDataDtoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$DailyDataDto {
   List<DateTime> get time => throw _privateConstructorUsedError;
+  @JsonKey(name: "apparent_temperature_max")
   List<double> get apparentTemperatureMax => throw _privateConstructorUsedError;
+  @JsonKey(name: "apparent_temperature_min")
   List<double> get apparentTemperatureMin => throw _privateConstructorUsedError;
+  @JsonKey(name: "wind_speed_10m_max")
   List<double> get windSpeed10mMax => throw _privateConstructorUsedError;
   List<int> get weatherCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "relative_humidity_2m_max")
   List<int> get relativeHumidity2mMax => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -233,10 +237,13 @@ abstract class $DailyDataDtoCopyWith<$Res> {
   @useResult
   $Res call(
       {List<DateTime> time,
+      @JsonKey(name: "apparent_temperature_max")
       List<double> apparentTemperatureMax,
+      @JsonKey(name: "apparent_temperature_min")
       List<double> apparentTemperatureMin,
-      List<double> windSpeed10mMax,
+      @JsonKey(name: "wind_speed_10m_max") List<double> windSpeed10mMax,
       List<int> weatherCode,
+      @JsonKey(name: "relative_humidity_2m_max")
       List<int> relativeHumidity2mMax});
 }
 
@@ -299,10 +306,13 @@ abstract class _$$DailyDataDtoImplCopyWith<$Res>
   @useResult
   $Res call(
       {List<DateTime> time,
+      @JsonKey(name: "apparent_temperature_max")
       List<double> apparentTemperatureMax,
+      @JsonKey(name: "apparent_temperature_min")
       List<double> apparentTemperatureMin,
-      List<double> windSpeed10mMax,
+      @JsonKey(name: "wind_speed_10m_max") List<double> windSpeed10mMax,
       List<int> weatherCode,
+      @JsonKey(name: "relative_humidity_2m_max")
       List<int> relativeHumidity2mMax});
 }
 
@@ -359,10 +369,14 @@ class __$$DailyDataDtoImplCopyWithImpl<$Res>
 class _$DailyDataDtoImpl implements _DailyDataDto {
   const _$DailyDataDtoImpl(
       {final List<DateTime> time = const [],
+      @JsonKey(name: "apparent_temperature_max")
       final List<double> apparentTemperatureMax = const [],
+      @JsonKey(name: "apparent_temperature_min")
       final List<double> apparentTemperatureMin = const [],
+      @JsonKey(name: "wind_speed_10m_max")
       final List<double> windSpeed10mMax = const [],
       final List<int> weatherCode = const [],
+      @JsonKey(name: "relative_humidity_2m_max")
       final List<int> relativeHumidity2mMax = const []})
       : _time = time,
         _apparentTemperatureMax = apparentTemperatureMax,
@@ -385,7 +399,7 @@ class _$DailyDataDtoImpl implements _DailyDataDto {
 
   final List<double> _apparentTemperatureMax;
   @override
-  @JsonKey()
+  @JsonKey(name: "apparent_temperature_max")
   List<double> get apparentTemperatureMax {
     if (_apparentTemperatureMax is EqualUnmodifiableListView)
       return _apparentTemperatureMax;
@@ -395,7 +409,7 @@ class _$DailyDataDtoImpl implements _DailyDataDto {
 
   final List<double> _apparentTemperatureMin;
   @override
-  @JsonKey()
+  @JsonKey(name: "apparent_temperature_min")
   List<double> get apparentTemperatureMin {
     if (_apparentTemperatureMin is EqualUnmodifiableListView)
       return _apparentTemperatureMin;
@@ -405,7 +419,7 @@ class _$DailyDataDtoImpl implements _DailyDataDto {
 
   final List<double> _windSpeed10mMax;
   @override
-  @JsonKey()
+  @JsonKey(name: "wind_speed_10m_max")
   List<double> get windSpeed10mMax {
     if (_windSpeed10mMax is EqualUnmodifiableListView) return _windSpeed10mMax;
     // ignore: implicit_dynamic_type
@@ -423,7 +437,7 @@ class _$DailyDataDtoImpl implements _DailyDataDto {
 
   final List<int> _relativeHumidity2mMax;
   @override
-  @JsonKey()
+  @JsonKey(name: "relative_humidity_2m_max")
   List<int> get relativeHumidity2mMax {
     if (_relativeHumidity2mMax is EqualUnmodifiableListView)
       return _relativeHumidity2mMax;
@@ -482,10 +496,13 @@ class _$DailyDataDtoImpl implements _DailyDataDto {
 abstract class _DailyDataDto implements DailyDataDto {
   const factory _DailyDataDto(
       {final List<DateTime> time,
+      @JsonKey(name: "apparent_temperature_max")
       final List<double> apparentTemperatureMax,
+      @JsonKey(name: "apparent_temperature_min")
       final List<double> apparentTemperatureMin,
-      final List<double> windSpeed10mMax,
+      @JsonKey(name: "wind_speed_10m_max") final List<double> windSpeed10mMax,
       final List<int> weatherCode,
+      @JsonKey(name: "relative_humidity_2m_max")
       final List<int> relativeHumidity2mMax}) = _$DailyDataDtoImpl;
 
   factory _DailyDataDto.fromJson(Map<String, dynamic> json) =
@@ -494,14 +511,18 @@ abstract class _DailyDataDto implements DailyDataDto {
   @override
   List<DateTime> get time;
   @override
+  @JsonKey(name: "apparent_temperature_max")
   List<double> get apparentTemperatureMax;
   @override
+  @JsonKey(name: "apparent_temperature_min")
   List<double> get apparentTemperatureMin;
   @override
+  @JsonKey(name: "wind_speed_10m_max")
   List<double> get windSpeed10mMax;
   @override
   List<int> get weatherCode;
   @override
+  @JsonKey(name: "relative_humidity_2m_max")
   List<int> get relativeHumidity2mMax;
   @override
   @JsonKey(ignore: true)

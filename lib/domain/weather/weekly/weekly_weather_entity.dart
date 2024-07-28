@@ -28,11 +28,13 @@ class DailyData extends Entity {
   final double? windSpeed10mMax;
   final int? weatherCode;
   final int? relativeHumidity2mMax;
+  final bool isSelected;
 
   DailyData({
     this.time,
     this.apparentTemperatureMax,
     this.apparentTemperatureMin,
+    this.isSelected = false,
     this.windSpeed10mMax,
     this.weatherCode,
     this.relativeHumidity2mMax,

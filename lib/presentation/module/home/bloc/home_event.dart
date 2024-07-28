@@ -9,8 +9,9 @@ class GetCurrentWeatherEvent extends HomeEvent {
   final double lat;
   final double log;
   final String city;
+  final DateTime time;
   const GetCurrentWeatherEvent(
-      {required this.lat, required this.log, required this.city});
+      {required this.lat, required this.log, required this.city, required this.time});
   @override
   List<Object?> get props => [lat, log];
 }

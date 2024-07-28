@@ -1,12 +1,10 @@
 import 'package:injectable/injectable.dart';
 import 'package:weather_app/data/repository/mapper/city_entity_mapper.dart';
-import 'package:weather_app/data/repository/mapper/current_weather_entity_mapper.dart';
 import 'package:weather_app/data/repository/mapper/weekly_entity_mapper.dart';
 import 'package:weather_app/data/repository/weather_datasource.dart';
 import 'package:weather_app/domain/city/city_entity.dart';
 import 'package:weather_app/domain/city/city_request.dart';
-import 'package:weather_app/domain/weather/current/current_weather_entity.dart';
-import 'package:weather_app/domain/weather/current/current_weather_request.dart';
+import 'package:weather_app/domain/weather/select/selected_day_weather_request.dart';
 import 'package:weather_app/domain/weather/weekly/weekly_request.dart';
 import 'package:weather_app/domain/weather/weekly/weekly_weather_entity.dart';
 
@@ -16,8 +14,7 @@ class WeatherRepository {
   final CityEntityMapper _cityEntityMapper = const CityEntityMapper();
   final WeeklyWeatherEntityMapper _weeklyWeatherEntityMapper =
       const WeeklyWeatherEntityMapper();
-  final CurrentWeatherEntityMapper _currentWeatherEntityMapper =
-      const CurrentWeatherEntityMapper();
+
   const WeatherRepository({required WeatherDataSource weatherDataSource})
       : _weatherDataSource = weatherDataSource;
 
@@ -29,10 +26,10 @@ class WeatherRepository {
     });
   }
 
-  Future<CurrentWeatherEntity> getCurrentWeather(
-      CurrentWeatherRequest request) {
+  Future<WeeklyWeatherEntity> getCurrentWeather(
+     SelectedDayWeatherRequest request) {
     return _weatherDataSource.getCurrentWeather(request).then((e) {
-      return _currentWeatherEntityMapper.mapToEntity(e);
+      return _weeklyWeatherEntityMapper.mapToEntity(e);
     });
   }
 

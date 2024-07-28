@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:weather_app/domain/weather/current/current_weather_entity.dart';
 import 'package:weather_app/domain/weather/weekly/weekly_weather_entity.dart';
 import 'package:weather_app/presentation/module/home/model/location_model.dart';
 part 'home_bloc_data.freezed.dart';
@@ -9,5 +8,6 @@ class HomeBlocData with _$HomeBlocData {
   const factory HomeBlocData(
       {WeeklyWeatherEntity? weeklyData,
       LocationModel? locationData,
-      CurrentWeatherEntity? currentWeatherData}) = _HomeBlocData;
+      DateTime? selectedDate,
+      WeeklyWeatherEntity? currentWeatherData}) = _HomeBlocData;
 }
