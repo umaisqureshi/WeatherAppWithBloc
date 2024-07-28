@@ -28,6 +28,8 @@ class _HomeScreenState extends ScreenState<HomeBloc>
     locationData = await UserLocation.determinePosition();
     bloc.add(GetCurrentWeatherEvent(
         lat: locationData.latitude, log: locationData.longitude));
+    bloc.add(GetWeeklyWeatherEvent(
+        lat: locationData.latitude, log: locationData.longitude));
   }
 
   @override
