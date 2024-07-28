@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
+import 'package:weather_app/domain/city/get_city_use_case.dart';
 import 'package:weather_app/domain/weather/current/get_current_weather_use_case.dart';
 import 'package:weather_app/domain/weather/weekly/get_weekly_weather_use_case.dart';
 import 'package:weather_app/presentation/module/home/home.dart';
@@ -12,12 +13,15 @@ import '../routing/route_screen_provider.dart';
 class HomeRouteProvider extends RouteScreenProvider<HomeBloc> {
   final CurrentWeatherUseCase _currentWeatherUseCase;
   final WeeklyWeatherUseCase _weeklyWeatherUseCase;
+  final GetCitiesByQueryUseCase _citiesByQueryUseCase;
 
   HomeRouteProvider(
       {required super.bloc,
       required CurrentWeatherUseCase currentWeatherUseCase,
+      required GetCitiesByQueryUseCase getCitiesByQueryUseCase,
       required WeeklyWeatherUseCase weeklyWeatherUseCase})
       : _currentWeatherUseCase = currentWeatherUseCase,
+        _citiesByQueryUseCase = getCitiesByQueryUseCase,
         _weeklyWeatherUseCase = weeklyWeatherUseCase;
 
   @override
@@ -25,6 +29,7 @@ class HomeRouteProvider extends RouteScreenProvider<HomeBloc> {
     return BlocProvider(
       create: (context) {
         final bloc = HomeBloc(
+            getCitiesByQueryUseCase: _citiesByQueryUseCase,
             weeklyWeatherUseCase: _weeklyWeatherUseCase,
             currentWeatherUseCase: _currentWeatherUseCase);
         bloc.updateExtra(state.extra);

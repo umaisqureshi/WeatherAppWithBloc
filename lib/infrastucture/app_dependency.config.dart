@@ -48,15 +48,17 @@ extension GetItInjectableX on _i1.GetIt {
         _i8.WeeklyWeatherUseCase(repository: gh<_i7.WeatherRepository>()));
     gh.factory<_i9.CurrentWeatherUseCase>(() =>
         _i9.CurrentWeatherUseCase(repository: gh<_i7.WeatherRepository>()));
-    gh.factory<_i10.GetWeatherUseCase>(
-        () => _i10.GetWeatherUseCase(repository: gh<_i7.WeatherRepository>()));
+    gh.factory<_i10.GetCitiesByQueryUseCase>(() =>
+        _i10.GetCitiesByQueryUseCase(repository: gh<_i7.WeatherRepository>()));
     gh.factory<_i11.HomeBloc>(() => _i11.HomeBloc(
           currentWeatherUseCase: gh<_i9.CurrentWeatherUseCase>(),
+          getCitiesByQueryUseCase: gh<_i10.GetCitiesByQueryUseCase>(),
           weeklyWeatherUseCase: gh<_i8.WeeklyWeatherUseCase>(),
         ));
     gh.factory<_i12.HomeRouteProvider>(() => _i12.HomeRouteProvider(
           bloc: gh<_i11.HomeBloc>(),
           currentWeatherUseCase: gh<_i9.CurrentWeatherUseCase>(),
+          getCitiesByQueryUseCase: gh<_i10.GetCitiesByQueryUseCase>(),
           weeklyWeatherUseCase: gh<_i8.WeeklyWeatherUseCase>(),
         ));
     gh.lazySingleton<_i13.AppRouteFactory>(() => _i13.AppRouteFactory(

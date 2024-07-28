@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:weather_app/domain/base/use_case_result.dart';
+import 'package:weather_app/domain/city/get_city_use_case.dart';
 import 'package:weather_app/domain/weather/current/current_weather_request.dart';
 import 'package:weather_app/domain/weather/current/get_current_weather_use_case.dart';
 import 'package:weather_app/domain/weather/weekly/get_weekly_weather_use_case.dart';
@@ -18,11 +19,14 @@ part 'home_state.dart';
 class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
   final CurrentWeatherUseCase _currentWeatherUseCase;
   final WeeklyWeatherUseCase _weeklyWeatherUseCase;
+  final GetCitiesByQueryUseCase _citiesByQueryUseCase;
   HomeBlocData blocData = const HomeBlocData();
   HomeBloc(
       {required CurrentWeatherUseCase currentWeatherUseCase,
+      required GetCitiesByQueryUseCase getCitiesByQueryUseCase,
       required WeeklyWeatherUseCase weeklyWeatherUseCase})
       : _currentWeatherUseCase = currentWeatherUseCase,
+        _citiesByQueryUseCase = getCitiesByQueryUseCase,
         _weeklyWeatherUseCase = weeklyWeatherUseCase,
         super(HomeInitial()) {
     on<GetCurrentWeatherEvent>((event, emit) async {

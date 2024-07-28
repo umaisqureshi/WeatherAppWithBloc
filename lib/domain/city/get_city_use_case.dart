@@ -5,11 +5,11 @@ import 'package:weather_app/domain/city/city_entity.dart';
 import 'package:weather_app/domain/city/city_request.dart';
 
 @injectable
-class GetWeatherUseCase
+class GetCitiesByQueryUseCase
     extends SingleUseCase<GetCityRequest, List<CityEntity>> {
   final WeatherRepository _repository;
 
-  const GetWeatherUseCase({required WeatherRepository repository})
+  const GetCitiesByQueryUseCase({required WeatherRepository repository})
       : _repository = repository;
   @override
   Future<List<CityEntity>> task(GetCityRequest request) {
