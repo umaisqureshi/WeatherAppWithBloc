@@ -9,8 +9,12 @@ import 'package:weather_app/presentation/module/home/bloc/home_bloc.dart';
 class WeatherBottomWidget extends StatefulWidget {
   final WeeklyWeatherEntity currentWether;
   final bool isLandscape;
+  final bool isCelsius;
   const WeatherBottomWidget(
-      {super.key, required this.isLandscape, required this.currentWether});
+      {super.key,
+      required this.isLandscape,
+      required this.currentWether,
+      required this.isCelsius});
 
   @override
   State<WeatherBottomWidget> createState() => _WeatherBottomWidgetState();
@@ -18,6 +22,17 @@ class WeatherBottomWidget extends StatefulWidget {
 
 class _WeatherBottomWidgetState extends State<WeatherBottomWidget> {
   bool positive = true;
+
+  @override
+  void initState() {
+    positive = widget.isCelsius;
+    super.initState();
+  }
+  @override
+  void didUpdateWidget(covariant WeatherBottomWidget oldWidget) {
+    positive = widget.isCelsius;
+    super.didUpdateWidget(oldWidget);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +115,9 @@ class _WeatherBottomWidgetState extends State<WeatherBottomWidget> {
             onChanged: (b) {
               setState(() => positive = b);
 
-              context.read<HomeBloc>().add(ConvertWeatherEvent(isCelsius: positive));
+              context
+                  .read<HomeBloc>()
+                  .add(ConvertWeatherEvent(isCelsius: positive));
             },
             styleBuilder: (b) => ToggleStyle(
                 indicatorColor: b ? Colors.deepPurple : Colors.deepPurple),

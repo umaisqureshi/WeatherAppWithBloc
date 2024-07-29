@@ -22,7 +22,7 @@ part 'home_state.dart';
 class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
   final SelectedDayWeatherUseCase _currentWeatherUseCase;
   final WeeklyWeatherUseCase _weeklyWeatherUseCase;
-  //Future improvement
+  //Future feature
   final GetCitiesByQueryUseCase _citiesByQueryUseCase;
   HomeBlocData blocData = const HomeBlocData();
   HomeBloc(
@@ -54,6 +54,9 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
       await _convertWeatherScale(event.isCelsius, emit);
     });
     on<RefreshWeatherEvent>((event, emit) async {
+      blocData = blocData.copyWith(
+        currentScaleIsCelsius: true
+      );
       add(GetCurrentWeatherEvent(
           lat: blocData.locationData!.latitude,
           log: blocData.locationData!.longitude,

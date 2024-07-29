@@ -12,7 +12,7 @@ class WeatherHeaderWidget extends StatelessWidget {
       {super.key,
       required this.location,
       required this.currentWether,
-        required this.isCelsius,
+      required this.isCelsius,
       required this.isLandscape});
 
   @override
@@ -27,7 +27,9 @@ class WeatherHeaderWidget extends StatelessWidget {
                 isLandscape: isLandscape,
               ),
               WeatherBottomWidget(
-                  isLandscape: isLandscape, currentWether: currentWether),
+                  isCelsius: isCelsius,
+                  isLandscape: isLandscape,
+                  currentWether: currentWether),
             ],
           )
         : Column(
@@ -40,7 +42,9 @@ class WeatherHeaderWidget extends StatelessWidget {
                 isLandscape: isLandscape,
               ),
               WeatherBottomWidget(
-                  isLandscape: isLandscape, currentWether: currentWether),
+                  isCelsius: isCelsius,
+                  isLandscape: isLandscape,
+                  currentWether: currentWether),
             ],
           );
   }
