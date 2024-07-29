@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +10,7 @@ import 'package:weather_app/domain/weather/select/get_selected_day_weather_use_c
 import 'package:weather_app/domain/weather/weekly/get_weekly_weather_use_case.dart';
 import 'package:weather_app/domain/weather/weekly/weekly_request.dart';
 import 'package:weather_app/domain/weather/weekly/weekly_weather_entity.dart';
+import 'package:weather_app/presentation/base/state/listenable_state.dart';
 import 'package:weather_app/presentation/module/home/bloc/home_bloc_data.dart';
 import 'package:weather_app/presentation/module/home/model/location_model.dart';
 import '../../../base/bloc/base_bloc.dart';
@@ -20,6 +22,7 @@ part 'home_state.dart';
 class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
   final SelectedDayWeatherUseCase _currentWeatherUseCase;
   final WeeklyWeatherUseCase _weeklyWeatherUseCase;
+  //Future improvement
   final GetCitiesByQueryUseCase _citiesByQueryUseCase;
   HomeBlocData blocData = const HomeBlocData();
   HomeBloc(
@@ -43,6 +46,25 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
     on<GetWeeklyWeatherEvent>((event, emit) async {
       await _getWeeklyWeather(event.lat, event.log, emit);
     });
+    on<GetSelectedDayEvent>((event, emit) async {
+      await _getSelectedDayData(event.selectedDay, emit);
+    });
+    on<RefreshWeatherEvent>((event, emit) async {
+      add(GetCurrentWeatherEvent(
+          lat: blocData.locationData!.latitude,
+          log: blocData.locationData!.longitude,
+          city: blocData.locationData!.city,
+          time: DateTime.now()));
+    });
+    on<NetworkObserve>(_observe);
+    on<NetworkNotify>(_notifyStatus);
+  }
+  void _observe(event, emit) {
+    observeNetwork();
+  }
+
+  void _notifyStatus(NetworkNotify event, emit) {
+    event.isConnected ? emit(NetworkSuccess()) : emit(NetworkFailure());
   }
 
 //Methods
@@ -61,6 +83,7 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
               lat: blocData.locationData!.latitude,
               log: blocData.locationData!.longitude));
         }, onError: (error) {
+          emit(ErrorState(error: error.toString()));
           print(error.toString());
         }));
   }
@@ -77,5 +100,35 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
         }, onError: (error) {
           print(error.toString());
         }));
+  }
+
+  _getSelectedDayData(DailyData selectedDay, Emitter<HomeState> emit) async {
+    List<DailyData> tempData = [selectedDay];
+    blocData = blocData.copyWith(
+        selectedDate: DateTime.parse(selectedDay.time!),
+        currentWeatherData: blocData.currentWeatherData!.copyWith(
+          daily: tempData,
+        ));
+    emit(CurrentWeatherState(
+        currentWether: blocData.currentWeatherData!,
+        city: blocData.locationData!.city));
+    emit(WeeklyWeatherState(
+        weatherEntity: blocData.weeklyData!,
+        selectedDate: blocData.selectedDate!));
+  }
+
+  void observeNetwork() {
+    ConnectivityResult? previousConnectivity;
+
+    Connectivity().onConnectivityChanged.listen((value) {
+      if (value.contains(previousConnectivity) == false) {
+        previousConnectivity = value.last;
+        if (value.contains(ConnectivityResult.none)) {
+          add(const NetworkNotify());
+        } else {
+          add(const NetworkNotify(isConnected: true));
+        }
+      }
+    });
   }
 }

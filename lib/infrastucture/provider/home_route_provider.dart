@@ -26,15 +26,21 @@ class HomeRouteProvider extends RouteScreenProvider<HomeBloc> {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return BlocProvider(
-      create: (context) {
-        final bloc = HomeBloc(
-            getCitiesByQueryUseCase: _citiesByQueryUseCase,
-            weeklyWeatherUseCase: _weeklyWeatherUseCase,
-            currentWeatherUseCase: _currentWeatherUseCase);
-        bloc.updateExtra(state.extra);
-        return bloc;
-      },
+    return MultiBlocProvider(
+      providers: [
+
+        BlocProvider(
+          create: (context) {
+            final bloc = HomeBloc(
+                getCitiesByQueryUseCase: _citiesByQueryUseCase,
+                weeklyWeatherUseCase: _weeklyWeatherUseCase,
+                currentWeatherUseCase: _currentWeatherUseCase);
+            bloc.updateExtra(state.extra);
+            return bloc;
+          },
+        ),
+
+      ],
       child: const HomeScreen(),
     );
   }

@@ -1,12 +1,11 @@
-import 'dart:developer';
-import 'package:geocode/geocode.dart';
+//import 'package:geocode/geocode.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:weather_app/presentation/module/home/model/location_model.dart';
 
 class UserLocation {
   static Future<LocationModel> determinePosition() async {
     bool serviceEnabled;
-    GeoCode geoCode = GeoCode();
+   // GeoCode geoCode = GeoCode();
 
     LocationPermission permission;
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -27,11 +26,14 @@ class UserLocation {
           'Location permissions are permanently denied, we cannot request permissions.');
     }
     Position position = await Geolocator.getCurrentPosition();
-    Address address = await geoCode.reverseGeocoding(
-        latitude: position.latitude, longitude: position.longitude);
-    log(address.city.toString());
+
+    //Best with paid service
+    
+    // Address address = await geoCode.reverseGeocoding(
+    //     latitude: position.latitude, longitude: position.longitude);
+    // log(address.city.toString());
     return LocationModel(
-        city: address.city.toString(),
+        city: "Welcome",
         latitude: position.latitude,
         longitude: position.longitude);
   }

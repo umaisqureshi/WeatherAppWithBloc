@@ -11,7 +11,10 @@ class GetCurrentWeatherEvent extends HomeEvent {
   final String city;
   final DateTime time;
   const GetCurrentWeatherEvent(
-      {required this.lat, required this.log, required this.city, required this.time});
+      {required this.lat,
+      required this.log,
+      required this.city,
+      required this.time});
   @override
   List<Object?> get props => [lat, log];
 }
@@ -22,4 +25,29 @@ class GetWeeklyWeatherEvent extends HomeEvent {
   const GetWeeklyWeatherEvent({required this.lat, required this.log});
   @override
   List<Object?> get props => [lat, log];
+}
+
+class GetSelectedDayEvent extends HomeEvent {
+  final DailyData selectedDay;
+  const GetSelectedDayEvent({required this.selectedDay});
+  @override
+  List<Object?> get props => [selectedDay];
+}
+
+class RefreshWeatherEvent extends HomeEvent {
+  @override
+  List<Object?> get props => [DateTime.now().microsecond];
+}
+
+class NetworkObserve extends HomeEvent {
+  @override
+  List<Object?> get props => [DateTime.now().microsecond];
+}
+
+class NetworkNotify extends HomeEvent {
+  final bool isConnected;
+
+  const NetworkNotify({this.isConnected = false});
+  @override
+  List<Object?> get props => [DateTime.now().microsecond];
 }

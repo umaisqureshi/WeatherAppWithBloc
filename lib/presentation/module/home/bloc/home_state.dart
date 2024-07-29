@@ -6,6 +6,11 @@ abstract class HomeState extends Equatable {}
 class HomeInitial extends HomeState {
   @override
   List<Object?> get props => [];
+}class ErrorState extends HomeState {
+  final String error;
+   ErrorState({required this.error});
+  @override
+  List<Object?> get props => [];
 }
 
 class CurrentWeatherState extends HomeState {
@@ -22,4 +27,14 @@ class WeeklyWeatherState extends HomeState {
   WeeklyWeatherState({required this.weatherEntity, required this.selectedDate});
   @override
   List<Object?> get props => [weatherEntity];
+}
+
+class NetworkSuccess extends HomeState implements ListenableState {
+  @override
+  List<Object?> get props => [];
+}
+
+class NetworkFailure extends HomeState {
+  @override
+  List<Object?> get props => [];
 }

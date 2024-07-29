@@ -1,21 +1,23 @@
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:weather_app/domain/weather/weekly/weekly_weather_entity.dart';
 import 'package:weather_app/presentation/module/home/bloc/home_bloc.dart';
 import 'package:weather_app/presentation/module/home/component/weekly_weather_componet.dart';
 import 'package:weather_app/presentation/module/home/widgets/weather_header_widget.dart';
 
-class WeatherVerticalBodyWidget extends StatelessWidget {
+class WeatherLandscapeView extends StatefulWidget {
   final String location;
-  final WeeklyWeatherEntity currentWether;
+  final WeeklyWeatherEntity currentWeather;
+  const WeatherLandscapeView(
+      {super.key, required this.currentWeather, required this.location});
 
-  const WeatherVerticalBodyWidget(
-      {super.key, required this.location, required this.currentWether});
+  @override
+  State<WeatherLandscapeView> createState() => _WeatherLandscapeViewState();
+}
 
+class _WeatherLandscapeViewState extends State<WeatherLandscapeView> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -37,17 +39,26 @@ class WeatherVerticalBodyWidget extends StatelessWidget {
             }),
         child: ListView(
           padding: EdgeInsets.zero,
-          // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            WeatherHeaderWidget(
-              isLandscape: false,
-              location: location,
-              currentWether: currentWether,
-            ),
-            const WeeklyWeatherComponent(
-              isLandscape: false,
-
-            ),
+            Row(
+              children: [
+                SizedBox(
+                  width: MediaQuery.sizeOf(context).width * 0.45,
+                  child: WeatherHeaderWidget(
+                    isLandscape: true,
+                    location: widget.location,
+                    currentWether: widget.currentWeather,
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.sizeOf(context).width * 0.45,
+                  height: 300,
+                  child: const WeeklyWeatherComponent(
+                    isLandscape: true,
+                  ),
+                ),
+              ],
+            )
           ],
         ),
       ),

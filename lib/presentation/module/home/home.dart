@@ -1,9 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/presentation/module/home/component/current_weather_component.dart';
 import 'package:weather_app/presentation/module/home/location.dart';
 import 'package:weather_app/presentation/module/home/model/location_model.dart';
+import 'package:weather_app/presentation/module/internet/no_internet.dart';
 import '../../base/screen/stateful_screen.dart';
 import 'bloc/home_bloc.dart';
 
@@ -23,17 +25,25 @@ class _HomeScreenState extends ScreenState<HomeBloc>
   late LocationModel locationData;
   @override
   void initState() {
-    getUserLocation();
     super.initState();
+    getUserLocation();
   }
 
   getUserLocation() async {
-    locationData = await UserLocation.determinePosition();
-    bloc.add(GetCurrentWeatherEvent(
-        time: DateTime.now(),
-        city: locationData.city,
-        lat: locationData.latitude,
-        log: locationData.longitude));
+    bloc.add(NetworkObserve());
+  }
+
+  @override
+  void onListenableState(BuildContext context, Object? state) async {
+    super.onListenableState(context, state);
+    if (state is NetworkSuccess) {
+      locationData = await UserLocation.determinePosition();
+      bloc.add(GetCurrentWeatherEvent(
+          time: DateTime.now(),
+          city: locationData.city,
+          lat: locationData.latitude,
+          log: locationData.longitude));
+    }
   }
 
   @override
@@ -48,25 +58,34 @@ class _HomeScreenState extends ScreenState<HomeBloc>
       ),
       backgroundColor: Colors.black,
       extendBodyBehindAppBar: true,
-      body: const HomeScreenVerticalView(),
+      body: BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          if (state is NetworkFailure) {
+            return const NoInternetWidget();
+          }
+
+         return const HomeScreenView();
+        },
+      ),
     );
   }
 }
 
-class HomeScreenVerticalView extends StatefulWidget {
-  const HomeScreenVerticalView({
+
+class HomeScreenView extends StatefulWidget {
+  const HomeScreenView({
     super.key,
   });
 
   @override
-  State<HomeScreenVerticalView> createState() => _HomeScreenVerticalViewState();
+  State<HomeScreenView> createState() => _HomeScreenViewState();
 }
 
-class _HomeScreenVerticalViewState extends State<HomeScreenVerticalView> {
+class _HomeScreenViewState extends State<HomeScreenView> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(40, 1.2 * kTextTabBarHeight, 40, 20),
+      padding: const EdgeInsets.fromLTRB(30, 1.2 * kTextTabBarHeight, 40, 20),
       child: SizedBox(
         height: MediaQuery.sizeOf(context).height,
         child: Stack(

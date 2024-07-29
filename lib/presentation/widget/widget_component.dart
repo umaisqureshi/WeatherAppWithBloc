@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-abstract class WidgetComponent<
-    Bloc extends BlocBase<BlocState>,
-    BlocState,
+
+abstract class WidgetComponent<Bloc extends BlocBase<BlocState>, BlocState,
     CurrentState extends BlocState> extends StatelessWidget {
   const WidgetComponent({Key? key}) : super(key: key);
 
@@ -16,7 +15,6 @@ abstract class WidgetComponent<
       buildWhen: (previous, current) => rebuildCondition(previous, current),
     );
   }
-
 
   void onInit(BuildContext context) {}
 
