@@ -147,7 +147,8 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
     emit(CurrentWeatherState(
         isCelsius: blocData.currentScaleIsCelsius,
         currentWether: blocData.currentWeatherData!,
-        city: blocData.locationData!.city));
+        city: weatherCodeMap[
+            blocData.currentWeatherData!.daily[0].weatherCode]!));
     emit(WeeklyWeatherState(
         isCelsius: blocData.currentScaleIsCelsius,
         weatherEntity: blocData.weeklyData!,
