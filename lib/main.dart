@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:weather_app/infrastucture/app_dependency.dart';
 import 'package:weather_app/infrastucture/routing/app_router.dart';
-import 'package:weather_app/presentation/theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,9 +28,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      theme: ThemeData(
-        useMaterial3: true
-      ),
+      theme: ThemeData(useMaterial3: true),
       debugShowCheckedModeBanner: false,
       routerConfig: appRouter.generateRoutes(),
     );
