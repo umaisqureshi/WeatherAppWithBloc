@@ -5,7 +5,7 @@ import 'package:weather_app/presentation/module/home/model/location_model.dart';
 class UserLocation {
   static Future<LocationModel> determinePosition() async {
     bool serviceEnabled;
-   // GeoCode geoCode = GeoCode();
+    // GeoCode geoCode = GeoCode();
 
     LocationPermission permission;
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -28,7 +28,7 @@ class UserLocation {
     Position position = await Geolocator.getCurrentPosition();
 
     //Best with paid service
-    
+
     // Address address = await geoCode.reverseGeocoding(
     //     latitude: position.latitude, longitude: position.longitude);
     // log(address.city.toString());

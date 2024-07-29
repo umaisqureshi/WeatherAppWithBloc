@@ -54,9 +54,7 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
       await _convertWeatherScale(event.isCelsius, emit);
     });
     on<RefreshWeatherEvent>((event, emit) async {
-      blocData = blocData.copyWith(
-        currentScaleIsCelsius: true
-      );
+      blocData = blocData.copyWith(currentScaleIsCelsius: true);
       add(GetCurrentWeatherEvent(
           lat: blocData.locationData!.latitude,
           log: blocData.locationData!.longitude,
@@ -79,7 +77,7 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
           emit(CurrentWeatherState(
               isCelsius: blocData.currentScaleIsCelsius,
               currentWether: data,
-              city: blocData.locationData!.city));
+              city: weatherCodeMap[data.daily[0].weatherCode]!));
 
           add(GetWeeklyWeatherEvent(
               lat: blocData.locationData!.latitude,
@@ -116,7 +114,8 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
     emit(CurrentWeatherState(
         isCelsius: blocData.currentScaleIsCelsius,
         currentWether: blocData.currentWeatherData!,
-        city: blocData.locationData!.city));
+        city: weatherCodeMap[
+            blocData.currentWeatherData!.daily[0].weatherCode]!));
     emit(WeeklyWeatherState(
         isCelsius: blocData.currentScaleIsCelsius,
         weatherEntity: blocData.weeklyData!,
@@ -185,4 +184,35 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
       return (temperature - 32) * 5 / 9;
     }
   }
+
+  Map<int, String> weatherCodeMap = {
+    0: 'Clear sky',
+    1: 'Variable',
+    2: 'Variable',
+    3: 'Variable',
+    45: 'Rime fog',
+    48: 'Rime fog',
+    51: 'Drizzle',
+    53: 'Drizzle',
+    55: 'Drizzle',
+    56: 'Freezing Drizzle',
+    57: 'Freezing Drizzle',
+    61: 'Rain',
+    63: 'Rain',
+    65: 'Rain',
+    66: 'Freezing Rain',
+    67: 'Freezing Rain',
+    71: 'Snow fall',
+    75: 'Snow fall',
+    73: 'Snow fall',
+    77: 'Snow grains',
+    80: 'Rain showers',
+    81: 'Rain showers',
+    82: 'Rain showers',
+    85: 'Snow showers',
+    86: 'Snow showers',
+    95: 'Thunderstorm',
+    96: 'Thunderstorm',
+    99: 'Thunderstorm',
+  };
 }
