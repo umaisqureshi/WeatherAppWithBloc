@@ -39,6 +39,13 @@ class RefreshWeatherEvent extends HomeEvent {
   List<Object?> get props => [DateTime.now().microsecond];
 }
 
+class ConvertWeatherEvent extends HomeEvent {
+  final bool isCelsius;
+  const ConvertWeatherEvent({required this.isCelsius});
+  @override
+  List<Object?> get props => [isCelsius];
+}
+
 class NetworkObserve extends HomeEvent {
   @override
   List<Object?> get props => [DateTime.now().microsecond];

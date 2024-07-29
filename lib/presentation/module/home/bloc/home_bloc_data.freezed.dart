@@ -19,6 +19,7 @@ mixin _$HomeBlocData {
   WeeklyWeatherEntity? get weeklyData => throw _privateConstructorUsedError;
   LocationModel? get locationData => throw _privateConstructorUsedError;
   DateTime? get selectedDate => throw _privateConstructorUsedError;
+  bool get currentScaleIsCelsius => throw _privateConstructorUsedError;
   WeeklyWeatherEntity? get currentWeatherData =>
       throw _privateConstructorUsedError;
 
@@ -37,6 +38,7 @@ abstract class $HomeBlocDataCopyWith<$Res> {
       {WeeklyWeatherEntity? weeklyData,
       LocationModel? locationData,
       DateTime? selectedDate,
+      bool currentScaleIsCelsius,
       WeeklyWeatherEntity? currentWeatherData});
 }
 
@@ -56,6 +58,7 @@ class _$HomeBlocDataCopyWithImpl<$Res, $Val extends HomeBlocData>
     Object? weeklyData = freezed,
     Object? locationData = freezed,
     Object? selectedDate = freezed,
+    Object? currentScaleIsCelsius = null,
     Object? currentWeatherData = freezed,
   }) {
     return _then(_value.copyWith(
@@ -71,6 +74,10 @@ class _$HomeBlocDataCopyWithImpl<$Res, $Val extends HomeBlocData>
           ? _value.selectedDate
           : selectedDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      currentScaleIsCelsius: null == currentScaleIsCelsius
+          ? _value.currentScaleIsCelsius
+          : currentScaleIsCelsius // ignore: cast_nullable_to_non_nullable
+              as bool,
       currentWeatherData: freezed == currentWeatherData
           ? _value.currentWeatherData
           : currentWeatherData // ignore: cast_nullable_to_non_nullable
@@ -91,6 +98,7 @@ abstract class _$$HomeBlocDataImplCopyWith<$Res>
       {WeeklyWeatherEntity? weeklyData,
       LocationModel? locationData,
       DateTime? selectedDate,
+      bool currentScaleIsCelsius,
       WeeklyWeatherEntity? currentWeatherData});
 }
 
@@ -108,6 +116,7 @@ class __$$HomeBlocDataImplCopyWithImpl<$Res>
     Object? weeklyData = freezed,
     Object? locationData = freezed,
     Object? selectedDate = freezed,
+    Object? currentScaleIsCelsius = null,
     Object? currentWeatherData = freezed,
   }) {
     return _then(_$HomeBlocDataImpl(
@@ -123,6 +132,10 @@ class __$$HomeBlocDataImplCopyWithImpl<$Res>
           ? _value.selectedDate
           : selectedDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      currentScaleIsCelsius: null == currentScaleIsCelsius
+          ? _value.currentScaleIsCelsius
+          : currentScaleIsCelsius // ignore: cast_nullable_to_non_nullable
+              as bool,
       currentWeatherData: freezed == currentWeatherData
           ? _value.currentWeatherData
           : currentWeatherData // ignore: cast_nullable_to_non_nullable
@@ -138,6 +151,7 @@ class _$HomeBlocDataImpl implements _HomeBlocData {
       {this.weeklyData,
       this.locationData,
       this.selectedDate,
+      this.currentScaleIsCelsius = true,
       this.currentWeatherData});
 
   @override
@@ -147,11 +161,14 @@ class _$HomeBlocDataImpl implements _HomeBlocData {
   @override
   final DateTime? selectedDate;
   @override
+  @JsonKey()
+  final bool currentScaleIsCelsius;
+  @override
   final WeeklyWeatherEntity? currentWeatherData;
 
   @override
   String toString() {
-    return 'HomeBlocData(weeklyData: $weeklyData, locationData: $locationData, selectedDate: $selectedDate, currentWeatherData: $currentWeatherData)';
+    return 'HomeBlocData(weeklyData: $weeklyData, locationData: $locationData, selectedDate: $selectedDate, currentScaleIsCelsius: $currentScaleIsCelsius, currentWeatherData: $currentWeatherData)';
   }
 
   @override
@@ -165,13 +182,15 @@ class _$HomeBlocDataImpl implements _HomeBlocData {
                 other.locationData == locationData) &&
             (identical(other.selectedDate, selectedDate) ||
                 other.selectedDate == selectedDate) &&
+            (identical(other.currentScaleIsCelsius, currentScaleIsCelsius) ||
+                other.currentScaleIsCelsius == currentScaleIsCelsius) &&
             (identical(other.currentWeatherData, currentWeatherData) ||
                 other.currentWeatherData == currentWeatherData));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, weeklyData, locationData, selectedDate, currentWeatherData);
+  int get hashCode => Object.hash(runtimeType, weeklyData, locationData,
+      selectedDate, currentScaleIsCelsius, currentWeatherData);
 
   @JsonKey(ignore: true)
   @override
@@ -185,6 +204,7 @@ abstract class _HomeBlocData implements HomeBlocData {
       {final WeeklyWeatherEntity? weeklyData,
       final LocationModel? locationData,
       final DateTime? selectedDate,
+      final bool currentScaleIsCelsius,
       final WeeklyWeatherEntity? currentWeatherData}) = _$HomeBlocDataImpl;
 
   @override
@@ -193,6 +213,8 @@ abstract class _HomeBlocData implements HomeBlocData {
   LocationModel? get locationData;
   @override
   DateTime? get selectedDate;
+  @override
+  bool get currentScaleIsCelsius;
   @override
   WeeklyWeatherEntity? get currentWeatherData;
   @override

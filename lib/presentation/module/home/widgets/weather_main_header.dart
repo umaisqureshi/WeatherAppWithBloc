@@ -7,12 +7,14 @@ class WeatherMainHeader extends StatelessWidget {
   final String location;
   final WeeklyWeatherEntity currentWether;
   final bool isLandscape;
+  final bool isCelsius;
 
   const WeatherMainHeader(
       {super.key,
-        required this.currentWether,
-        required this.location,
-        required this.isLandscape});
+      required this.currentWether,
+      required this.location,
+      required this.isCelsius,
+      required this.isLandscape});
 
   @override
   Widget build(BuildContext context) {
@@ -42,42 +44,43 @@ class WeatherMainHeader extends StatelessWidget {
         ),
         isLandscape
             ? Image.asset(
-          "assets/images/png/${currentWether.daily[0].weatherCode}.png",
-          filterQuality: FilterQuality.high,
-          height: 200,
-          width: 200,
-        )
+                "assets/images/png/${currentWether.daily[0].weatherCode}.png",
+                filterQuality: FilterQuality.high,
+                height: 200,
+                width: 200,
+              )
             : Image.asset(
-          "assets/images/png/${currentWether.daily[0].weatherCode}.png",
-          filterQuality: FilterQuality.high,
-        ),
-        const SizedBox(
-          height: 3,
-        ),
+                "assets/images/png/${currentWether.daily[0].weatherCode}.png",
+                filterQuality: FilterQuality.high,
+              ),
         isLandscape
             ? Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 40),
-          child: Text(
-            "${currentWether.daily[0].apparentTemperatureMax!.round().toString()}°C",
-            style: GoogleFonts.raleway(
-              fontSize: 30,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        )
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: Text(
+                  isCelsius
+                      ? "${currentWether.daily[0].apparentTemperatureMax!.round().toString()}°C"
+                      : "${currentWether.daily[0].apparentTemperatureMax!.round().toString()}°F",
+                  style: GoogleFonts.raleway(
+                    fontSize: 30,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              )
             : Center(
-          child: Text(
-            "${currentWether.daily[0].apparentTemperatureMax!.round().toString()}°C",
-            style: GoogleFonts.raleway(
-              fontSize: 50,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
+                child: Text(
+                  isCelsius
+                      ? "${currentWether.daily[0].apparentTemperatureMax!.round().toString()}°C"
+                      : "${currentWether.daily[0].apparentTemperatureMax!.round().toString()}°F",
+                  style: GoogleFonts.raleway(
+                    fontSize: 50,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
         const SizedBox(
-          height: 20,
+          height: 10,
         ),
       ],
     );

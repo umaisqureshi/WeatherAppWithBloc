@@ -49,6 +49,10 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
     on<GetSelectedDayEvent>((event, emit) async {
       await _getSelectedDayData(event.selectedDay, emit);
     });
+
+    on<ConvertWeatherEvent>((event, emit) async {
+      await _convertWeatherScale(event.isCelsius, emit);
+    });
     on<RefreshWeatherEvent>((event, emit) async {
       add(GetCurrentWeatherEvent(
           lat: blocData.locationData!.latitude,
@@ -58,13 +62,6 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
     });
     on<NetworkObserve>(_observe);
     on<NetworkNotify>(_notifyStatus);
-  }
-  void _observe(event, emit) {
-    observeNetwork();
-  }
-
-  void _notifyStatus(NetworkNotify event, emit) {
-    event.isConnected ? emit(NetworkSuccess()) : emit(NetworkFailure());
   }
 
 //Methods
@@ -77,7 +74,9 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
         UseCaseResult(onSuccess: (data) {
           blocData = blocData.copyWith(currentWeatherData: data);
           emit(CurrentWeatherState(
-              currentWether: data, city: blocData.locationData!.city));
+              isCelsius: blocData.currentScaleIsCelsius,
+              currentWether: data,
+              city: blocData.locationData!.city));
 
           add(GetWeeklyWeatherEvent(
               lat: blocData.locationData!.latitude,
@@ -96,7 +95,9 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
         UseCaseResult(onSuccess: (data) {
           blocData = blocData.copyWith(weeklyData: data);
           emit(WeeklyWeatherState(
-              weatherEntity: data, selectedDate: blocData.selectedDate!));
+              isCelsius: blocData.currentScaleIsCelsius,
+              weatherEntity: data,
+              selectedDate: blocData.selectedDate!));
         }, onError: (error) {
           print(error.toString());
         }));
@@ -110,11 +111,53 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
           daily: tempData,
         ));
     emit(CurrentWeatherState(
+        isCelsius: blocData.currentScaleIsCelsius,
         currentWether: blocData.currentWeatherData!,
         city: blocData.locationData!.city));
     emit(WeeklyWeatherState(
+        isCelsius: blocData.currentScaleIsCelsius,
         weatherEntity: blocData.weeklyData!,
         selectedDate: blocData.selectedDate!));
+  }
+
+  _convertWeatherScale(bool isCelsius, Emitter<HomeState> emit) async {
+    List<DailyData> currentDay = [
+      blocData.currentWeatherData!.daily[0].copyWith(
+          apparentTemperatureMax: convertTemperature(
+              blocData.currentWeatherData!.daily[0].apparentTemperatureMax!,
+              isCelsius))
+    ];
+
+    List<DailyData> weekDays = blocData.weeklyData!.daily;
+    for (int i = 0; i < weekDays.length; i++) {
+      weekDays[i].apparentTemperatureMax =
+          convertTemperature(weekDays[i].apparentTemperatureMax!, isCelsius);
+      weekDays[i].apparentTemperatureMin =
+          convertTemperature(weekDays[i].apparentTemperatureMin!, isCelsius);
+    }
+
+    blocData = blocData.copyWith(
+      currentScaleIsCelsius: isCelsius,
+      currentWeatherData:
+          blocData.currentWeatherData!.copyWith(daily: currentDay),
+      weeklyData: blocData.weeklyData!.copyWith(daily: weekDays),
+    );
+    emit(CurrentWeatherState(
+        isCelsius: blocData.currentScaleIsCelsius,
+        currentWether: blocData.currentWeatherData!,
+        city: blocData.locationData!.city));
+    emit(WeeklyWeatherState(
+        isCelsius: blocData.currentScaleIsCelsius,
+        weatherEntity: blocData.weeklyData!,
+        selectedDate: blocData.selectedDate!));
+  }
+
+  void _observe(event, emit) {
+    observeNetwork();
+  }
+
+  void _notifyStatus(NetworkNotify event, emit) {
+    event.isConnected ? emit(NetworkSuccess()) : emit(NetworkFailure());
   }
 
   void observeNetwork() {
@@ -130,5 +173,13 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
         }
       }
     });
+  }
+
+  double convertTemperature(double temperature, bool isCelsius) {
+    if (isCelsius == false) {
+      return (temperature * 9 / 5) + 32;
+    } else {
+      return (temperature - 32) * 5 / 9;
+    }
   }
 }

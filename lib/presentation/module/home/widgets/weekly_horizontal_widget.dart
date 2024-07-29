@@ -8,8 +8,13 @@ import 'package:weather_app/presentation/module/home/bloc/home_bloc.dart';
 class WeeklyHorizontalWidget extends StatefulWidget {
   final WeeklyWeatherEntity weatherEntity;
   final DateTime selectedDate;
+  final bool isCelsius;
+
   const WeeklyHorizontalWidget(
-      {super.key, required this.weatherEntity, required this.selectedDate});
+      {super.key,
+      required this.weatherEntity,
+      required this.selectedDate,
+      required this.isCelsius});
 
   @override
   State<WeeklyHorizontalWidget> createState() => _WeeklyHorizontalWidgetState();
@@ -68,7 +73,9 @@ class _WeeklyHorizontalWidgetState extends State<WeeklyHorizontalWidget> {
                     ),
                     Center(
                       child: Text(
-                        "${data.apparentTemperatureMax!.round().toString()}°C | ${data.apparentTemperatureMin!.round().toString()}°C",
+                        widget.isCelsius
+                            ? "${data.apparentTemperatureMax!.round().toString()}°C | ${data.apparentTemperatureMin!.round().toString()}°C"
+                            : "${data.apparentTemperatureMax!.round().toString()}°F | ${data.apparentTemperatureMin!.round().toString()}°F",
                         style: GoogleFonts.b612(
                           fontSize: 12,
                           color: Colors.white,

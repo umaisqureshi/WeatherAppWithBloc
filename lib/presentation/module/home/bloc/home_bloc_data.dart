@@ -9,5 +9,6 @@ class HomeBlocData with _$HomeBlocData {
       {WeeklyWeatherEntity? weeklyData,
       LocationModel? locationData,
       DateTime? selectedDate,
+      @Default(true)  bool currentScaleIsCelsius,
       WeeklyWeatherEntity? currentWeatherData}) = _HomeBlocData;
 }

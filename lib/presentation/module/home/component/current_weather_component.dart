@@ -19,11 +19,13 @@ class CurrentWeatherComponent extends ErrorWidgetComponent<HomeBloc, HomeState,
       if (constraint.maxWidth >= 600) {
         return WeatherLandscapeView(
           location: state.city,
+          isCelsius: state.isCelsius,
           currentWeather: state.currentWether,
         );
       }
       return WeatherVerticalBodyWidget(
         location: state.city,
+        isCelsius: state.isCelsius,
         currentWether: state.currentWether,
       );
     });

@@ -36,8 +36,8 @@ class WeeklyWeatherEntity extends Entity {
 
 class DailyData extends Entity {
   final String? time;
-  final double? apparentTemperatureMax;
-  final double? apparentTemperatureMin;
+   double? apparentTemperatureMax;
+   double? apparentTemperatureMin;
   final double? windSpeed10mMax;
   final int? weatherCode;
   final int? relativeHumidity2mMax;

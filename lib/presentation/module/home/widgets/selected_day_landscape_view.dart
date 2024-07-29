@@ -10,8 +10,13 @@ import 'package:weather_app/presentation/module/home/widgets/weather_header_widg
 class WeatherLandscapeView extends StatefulWidget {
   final String location;
   final WeeklyWeatherEntity currentWeather;
+  final bool isCelsius;
+
   const WeatherLandscapeView(
-      {super.key, required this.currentWeather, required this.location});
+      {super.key,
+      required this.currentWeather,
+      required this.location,
+      required this.isCelsius});
 
   @override
   State<WeatherLandscapeView> createState() => _WeatherLandscapeViewState();
@@ -45,6 +50,7 @@ class _WeatherLandscapeViewState extends State<WeatherLandscapeView> {
                 SizedBox(
                   width: MediaQuery.sizeOf(context).width * 0.45,
                   child: WeatherHeaderWidget(
+                    isCelsius: widget.isCelsius,
                     isLandscape: true,
                     location: widget.location,
                     currentWether: widget.currentWeather,

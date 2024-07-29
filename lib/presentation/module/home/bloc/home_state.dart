@@ -16,7 +16,8 @@ class HomeInitial extends HomeState {
 class CurrentWeatherState extends HomeState {
   final WeeklyWeatherEntity currentWether;
   final String city;
-  CurrentWeatherState({required this.currentWether, required this.city});
+  final bool isCelsius;
+  CurrentWeatherState({required this.currentWether, required this.city, required this.isCelsius});
   @override
   List<Object?> get props => [currentWether];
 }
@@ -24,7 +25,9 @@ class CurrentWeatherState extends HomeState {
 class WeeklyWeatherState extends HomeState {
   final WeeklyWeatherEntity weatherEntity;
   final DateTime selectedDate;
-  WeeklyWeatherState({required this.weatherEntity, required this.selectedDate});
+  final bool isCelsius;
+
+  WeeklyWeatherState({required this.weatherEntity, required this.selectedDate, required this.isCelsius});
   @override
   List<Object?> get props => [weatherEntity];
 }

@@ -12,9 +12,9 @@ import 'package:weather_app/presentation/module/home/widgets/weather_header_widg
 class WeatherVerticalBodyWidget extends StatelessWidget {
   final String location;
   final WeeklyWeatherEntity currentWether;
-
+final bool isCelsius;
   const WeatherVerticalBodyWidget(
-      {super.key, required this.location, required this.currentWether});
+      {super.key, required this.location, required this.currentWether, required this.isCelsius});
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +40,7 @@ class WeatherVerticalBodyWidget extends StatelessWidget {
           // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             WeatherHeaderWidget(
+              isCelsius: isCelsius,
               isLandscape: false,
               location: location,
               currentWether: currentWether,

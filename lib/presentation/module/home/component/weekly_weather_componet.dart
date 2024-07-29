@@ -16,10 +16,12 @@ class WeeklyWeatherComponent
   Widget buildComponent(BuildContext context, WeeklyWeatherState state) {
     return isLandscape
         ? WeeklyGridWidget(
+      isCelsius: state.isCelsius,
             weatherEntity: state.weatherEntity,
             selectedDate: state.selectedDate,
           )
         : WeeklyHorizontalWidget(
+      isCelsius: state.isCelsius,
             weatherEntity: state.weatherEntity,
             selectedDate: state.selectedDate,
           );

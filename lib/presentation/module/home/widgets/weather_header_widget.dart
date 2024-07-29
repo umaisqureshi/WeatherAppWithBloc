@@ -7,10 +7,12 @@ class WeatherHeaderWidget extends StatelessWidget {
   final String location;
   final WeeklyWeatherEntity currentWether;
   final bool isLandscape;
+  final bool isCelsius;
   const WeatherHeaderWidget(
       {super.key,
       required this.location,
       required this.currentWether,
+        required this.isCelsius,
       required this.isLandscape});
 
   @override
@@ -19,6 +21,7 @@ class WeatherHeaderWidget extends StatelessWidget {
         ? Row(
             children: [
               WeatherMainHeader(
+                isCelsius: isCelsius,
                 currentWether: currentWether,
                 location: location,
                 isLandscape: isLandscape,
@@ -31,6 +34,7 @@ class WeatherHeaderWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               WeatherMainHeader(
+                isCelsius: isCelsius,
                 currentWether: currentWether,
                 location: location,
                 isLandscape: isLandscape,
