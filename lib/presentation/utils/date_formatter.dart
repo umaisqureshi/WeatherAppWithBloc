@@ -11,4 +11,10 @@ class DateFormatter {
     final formatter = DateFormat('yyyy-MM-dd');
     return formatter.format(dateTime);
   }
+
+  String formatHorizontalDate(String inputDate) {
+    final dateTime = DateTime.parse(inputDate);
+    final formatter = DateFormat('EE');
+    return formatter.format(dateTime);
+  }
 }

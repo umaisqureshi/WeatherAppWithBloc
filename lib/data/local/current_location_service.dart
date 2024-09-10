@@ -1,9 +1,10 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:injectable/injectable.dart';
 import 'package:weather_app/presentation/module/home/model/location_model.dart';
+
 @injectable
 class UserCurrentLocationService {
-   Future<LocationModel> determineCurrentPosition() async {
+  Future<LocationModel> determineCurrentPosition() async {
     bool serviceEnabled;
     // GeoCode geoCode = GeoCode();
 

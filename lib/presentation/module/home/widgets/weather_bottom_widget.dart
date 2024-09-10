@@ -1,5 +1,4 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -28,6 +27,7 @@ class _WeatherBottomWidgetState extends State<WeatherBottomWidget> {
     positive = widget.isCelsius;
     super.initState();
   }
+
   @override
   void didUpdateWidget(covariant WeatherBottomWidget oldWidget) {
     positive = widget.isCelsius;
@@ -44,7 +44,7 @@ class _WeatherBottomWidgetState extends State<WeatherBottomWidget> {
             children: [
               TextSpan(
                 text: 'Wind :',
-                style: GoogleFonts.raleway(
+                style: GoogleFonts.lora(
                   color: Colors.white,
                   letterSpacing: 1.1,
                   fontSize: 18, // Or any color based on weatherCode
@@ -71,7 +71,7 @@ class _WeatherBottomWidgetState extends State<WeatherBottomWidget> {
             children: [
               TextSpan(
                 text: 'Humidity :',
-                style: GoogleFonts.raleway(
+                style: GoogleFonts.lora(
                   color: Colors.white,
                   letterSpacing: 1.1,
                   fontSize: 18, // Or any color based on weatherCode
@@ -101,7 +101,7 @@ class _WeatherBottomWidgetState extends State<WeatherBottomWidget> {
               borderRadius: BorderRadius.all(Radius.circular(5)),
               borderColor: Colors.transparent,
               backgroundColor: Colors.white24,
-              boxShadow: const [
+              boxShadow: [
                 BoxShadow(
                   color: Colors.black26,
                   spreadRadius: 1,

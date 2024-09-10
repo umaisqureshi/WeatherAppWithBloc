@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import 'package:weather_app/domain/weather/weekly/weekly_weather_entity.dart';
 import 'package:weather_app/presentation/module/home/bloc/home_bloc.dart';
+import 'package:weather_app/presentation/utils/date_compare.dart';
+import 'package:weather_app/presentation/utils/date_formatter.dart';
 
 class WeeklyGridWidget extends StatefulWidget {
   final WeeklyWeatherEntity weatherEntity;
@@ -39,8 +40,11 @@ class _WeeklyGridWidgetState extends State<WeeklyGridWidget> {
               width: 100,
               decoration: BoxDecoration(
                   border: Border.all(
-                      width: 2,
-                      color: isSameDay(
+                      width: DateEqualityChecker().isSameDay(
+                              DateTime.parse(data.time!), widget.selectedDate)
+                          ? 4
+                          : 1,
+                      color: DateEqualityChecker().isSameDay(
                               DateTime.parse(data.time!), widget.selectedDate)
                           ? Colors.orange
                           : Colors.white30),
@@ -54,7 +58,7 @@ class _WeeklyGridWidgetState extends State<WeeklyGridWidget> {
                   ),
                   Center(
                     child: Text(
-                      formatDate(data.time!),
+                      DateFormatter().formatHorizontalDate(data.time!),
                       style: GoogleFonts.b612(
                         fontSize: 12,
                         color: Colors.white,
@@ -90,17 +94,5 @@ class _WeeklyGridWidgetState extends State<WeeklyGridWidget> {
         );
       }).toList(),
     );
-  }
-
-  bool isSameDay(DateTime date1, DateTime date2) {
-    return date1.year == date2.year &&
-        date1.month == date2.month &&
-        date1.day == date2.day;
-  }
-
-  String formatDate(String inputDate) {
-    final dateTime = DateTime.parse(inputDate);
-    final formatter = DateFormat('EE');
-    return formatter.format(dateTime);
   }
 }

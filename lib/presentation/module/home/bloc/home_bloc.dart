@@ -1,4 +1,3 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +12,9 @@ import 'package:weather_app/domain/weather/weekly/weekly_request.dart';
 import 'package:weather_app/domain/weather/weekly/weekly_weather_entity.dart';
 import 'package:weather_app/presentation/base/state/listenable_state.dart';
 import 'package:weather_app/presentation/module/home/bloc/home_bloc_data.dart';
+import 'package:weather_app/presentation/module/home/bloc/service/network_bloc_service.dart';
 import 'package:weather_app/presentation/module/home/model/location_model.dart';
+import 'package:weather_app/presentation/utils/temp_convertor.dart';
 import '../../../base/bloc/base_bloc.dart';
 part 'home_event.dart';
 
@@ -27,6 +28,7 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
   // ignore: unused_field
   final GetCitiesByQueryUseCase _citiesByQueryUseCase;
   final GetUserCurrentLocationUseCase _currentLocationUseCase;
+  late NetworkBlocService _networkBlocService;
   HomeBlocData blocData = const HomeBlocData();
   HomeBloc(
       {required SelectedDayWeatherUseCase currentWeatherUseCase,
@@ -38,6 +40,7 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
         _currentLocationUseCase = currentLocationUseCase,
         _weeklyWeatherUseCase = weeklyWeatherUseCase,
         super(HomeInitial()) {
+    _initNetworkService();
     on<GetCurrentWeatherEvent>((event, emit) async {
       await _getCurrentWeather(event.lat, event.log, event.time, emit);
     });
@@ -62,8 +65,8 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
           city: blocData.locationData!.city,
           time: DateTime.now()));
     });
-    on<NetworkObserve>(_observe);
-    on<NetworkNotify>(_notifyStatus);
+    on<NetworkObserve>(_networkBlocService.observe);
+    on<NetworkNotify>(_networkBlocService.notifyStatus);
   }
 
 //Methods
@@ -145,17 +148,17 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
   _convertWeatherScale(bool isCelsius, Emitter<HomeState> emit) async {
     List<DailyData> currentDay = [
       blocData.currentWeatherData!.daily[0].copyWith(
-          apparentTemperatureMax: convertTemperature(
+          apparentTemperatureMax: TemperatureConvertor().convertTemperature(
               blocData.currentWeatherData!.daily[0].apparentTemperatureMax!,
               isCelsius))
     ];
 
     List<DailyData> weekDays = blocData.weeklyData!.daily;
     for (int i = 0; i < weekDays.length; i++) {
-      weekDays[i].apparentTemperatureMax =
-          convertTemperature(weekDays[i].apparentTemperatureMax!, isCelsius);
-      weekDays[i].apparentTemperatureMin =
-          convertTemperature(weekDays[i].apparentTemperatureMin!, isCelsius);
+      weekDays[i].apparentTemperatureMax = TemperatureConvertor()
+          .convertTemperature(weekDays[i].apparentTemperatureMax!, isCelsius);
+      weekDays[i].apparentTemperatureMin = TemperatureConvertor()
+          .convertTemperature(weekDays[i].apparentTemperatureMin!, isCelsius);
     }
 
     blocData = blocData.copyWith(
@@ -175,35 +178,8 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
         selectedDate: blocData.selectedDate!));
   }
 
-  void _observe(event, emit) {
-    observeNetwork();
-  }
-
-  void _notifyStatus(NetworkNotify event, emit) {
-    event.isConnected ? emit(NetworkSuccess()) : emit(NetworkFailure());
-  }
-
-  void observeNetwork() {
-    ConnectivityResult? previousConnectivity;
-
-    Connectivity().onConnectivityChanged.listen((value) {
-      if (value.contains(previousConnectivity) == false) {
-        previousConnectivity = value.last;
-        if (value.contains(ConnectivityResult.none)) {
-          add(const NetworkNotify());
-        } else {
-          add(const NetworkNotify(isConnected: true));
-        }
-      }
-    });
-  }
-
-  double convertTemperature(double temperature, bool isCelsius) {
-    if (isCelsius == false) {
-      return (temperature * 9 / 5) + 32;
-    } else {
-      return (temperature - 32) * 5 / 9;
-    }
+  _initNetworkService() {
+    _networkBlocService = NetworkBlocService(bloc: this);
   }
 
   Map<int, String> weatherCodeMap = {
