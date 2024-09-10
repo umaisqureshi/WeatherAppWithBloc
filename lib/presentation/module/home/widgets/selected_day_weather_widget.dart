@@ -1,8 +1,6 @@
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:weather_app/domain/weather/weekly/weekly_weather_entity.dart';
 import 'package:weather_app/presentation/module/home/bloc/home_bloc.dart';

@@ -19,6 +19,13 @@ class GetCurrentWeatherEvent extends HomeEvent {
   List<Object?> get props => [lat, log];
 }
 
+class GetCurrentLocationEvent extends HomeEvent {
+  final DateTime time;
+  const GetCurrentLocationEvent({required this.time});
+  @override
+  List<Object?> get props => [time];
+}
+
 class GetWeeklyWeatherEvent extends HomeEvent {
   final double lat;
   final double log;

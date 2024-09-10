@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/presentation/module/home/component/current_weather_component.dart';
-import 'package:weather_app/presentation/module/home/location.dart';
-import 'package:weather_app/presentation/module/home/model/location_model.dart';
 import 'package:weather_app/presentation/module/internet/no_internet.dart';
 import '../../base/screen/stateful_screen.dart';
 import 'bloc/home_bloc.dart';
@@ -22,7 +20,6 @@ class HomeScreen extends StatefulScreen<HomeBloc> {
 
 class _HomeScreenState extends ScreenState<HomeBloc>
     with TickerProviderStateMixin {
-  late LocationModel locationData;
   @override
   void initState() {
     super.initState();
@@ -37,12 +34,9 @@ class _HomeScreenState extends ScreenState<HomeBloc>
   void onListenableState(BuildContext context, Object? state) async {
     super.onListenableState(context, state);
     if (state is NetworkSuccess) {
-      locationData = await UserLocation.determinePosition();
-      bloc.add(GetCurrentWeatherEvent(
-          time: DateTime.now(),
-          city: locationData.city,
-          lat: locationData.latitude,
-          log: locationData.longitude));
+      bloc.add(GetCurrentLocationEvent(
+        time: DateTime.now(),
+      ));
     }
   }
 
@@ -64,13 +58,12 @@ class _HomeScreenState extends ScreenState<HomeBloc>
             return const NoInternetWidget();
           }
 
-         return const HomeScreenView();
+          return const HomeScreenView();
         },
       ),
     );
   }
 }
-
 
 class HomeScreenView extends StatefulWidget {
   const HomeScreenView({

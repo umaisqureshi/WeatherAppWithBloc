@@ -1,9 +1,9 @@
-//import 'package:geocode/geocode.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:injectable/injectable.dart';
 import 'package:weather_app/presentation/module/home/model/location_model.dart';
-
-class UserLocation {
-  static Future<LocationModel> determinePosition() async {
+@injectable
+class UserCurrentLocationService {
+   Future<LocationModel> determineCurrentPosition() async {
     bool serviceEnabled;
     // GeoCode geoCode = GeoCode();
 
@@ -28,7 +28,6 @@ class UserLocation {
     Position position = await Geolocator.getCurrentPosition();
 
     //Best with paid service
-
     // Address address = await geoCode.reverseGeocoding(
     //     latitude: position.latitude, longitude: position.longitude);
     // log(address.city.toString());

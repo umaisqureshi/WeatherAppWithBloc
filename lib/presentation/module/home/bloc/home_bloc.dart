@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:weather_app/domain/base/use_case_result.dart';
 import 'package:weather_app/domain/city/get_city_use_case.dart';
+import 'package:weather_app/domain/location/get_current_location_use_case.dart';
 import 'package:weather_app/domain/weather/select/selected_day_weather_request.dart';
 import 'package:weather_app/domain/weather/select/get_selected_day_weather_use_case.dart';
 import 'package:weather_app/domain/weather/weekly/get_weekly_weather_use_case.dart';
@@ -24,27 +25,26 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
   final WeeklyWeatherUseCase _weeklyWeatherUseCase;
   //Future feature
   final GetCitiesByQueryUseCase _citiesByQueryUseCase;
+  final GetUserCurrentLocationUseCase _currentLocationUseCase;
   HomeBlocData blocData = const HomeBlocData();
   HomeBloc(
       {required SelectedDayWeatherUseCase currentWeatherUseCase,
+      required GetUserCurrentLocationUseCase currentLocationUseCase,
       required GetCitiesByQueryUseCase getCitiesByQueryUseCase,
       required WeeklyWeatherUseCase weeklyWeatherUseCase})
       : _currentWeatherUseCase = currentWeatherUseCase,
         _citiesByQueryUseCase = getCitiesByQueryUseCase,
+        _currentLocationUseCase = currentLocationUseCase,
         _weeklyWeatherUseCase = weeklyWeatherUseCase,
         super(HomeInitial()) {
     on<GetCurrentWeatherEvent>((event, emit) async {
-      blocData = blocData.copyWith(
-          selectedDate: event.time,
-          locationData: LocationModel(
-            city: event.city,
-            latitude: event.lat,
-            longitude: event.log,
-          ));
       await _getCurrentWeather(event.lat, event.log, event.time, emit);
     });
     on<GetWeeklyWeatherEvent>((event, emit) async {
       await _getWeeklyWeather(event.lat, event.log, emit);
+    });
+    on<GetCurrentLocationEvent>((event, emit) async {
+      await _getCurrentLocation(event.time, emit);
     });
     on<GetSelectedDayEvent>((event, emit) async {
       await _getSelectedDayData(event.selectedDay, emit);
@@ -102,6 +102,25 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
         }, onError: (error) {
           print(error.toString());
         }));
+  }
+
+  _getCurrentLocation(DateTime time, Emitter<HomeState> emit) async {
+    return _currentLocationUseCase.perform(UseCaseResult(onSuccess: (data) {
+      blocData = blocData.copyWith(
+          selectedDate: time,
+          locationData: LocationModel(
+            city: data.city,
+            latitude: data.latitude,
+            longitude: data.longitude,
+          ));
+      add(GetCurrentWeatherEvent(
+          lat: data.latitude,
+          log: data.longitude,
+          city: data.city,
+          time: time));
+    }, onError: (error) {
+      print(error.toString());
+    }));
   }
 
   _getSelectedDayData(DailyData selectedDay, Emitter<HomeState> emit) async {
