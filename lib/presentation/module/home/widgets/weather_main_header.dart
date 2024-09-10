@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import 'package:weather_app/domain/weather/weekly/weekly_weather_entity.dart';
+import 'package:weather_app/presentation/utils/date_formatter.dart';
 
 class WeatherMainHeader extends StatelessWidget {
   final String location;
   final WeeklyWeatherEntity currentWether;
   final bool isLandscape;
   final bool isCelsius;
-
   const WeatherMainHeader(
       {super.key,
       required this.currentWether,
@@ -32,7 +31,8 @@ class WeatherMainHeader extends StatelessWidget {
           ),
         ),
         Text(
-          formatDate(currentWether.daily[0].time ?? DateTime.now().toString()),
+          DateFormatter().formatDate(
+              currentWether.daily[0].time ?? DateTime.now().toString()),
           style: GoogleFonts.arima(
             fontSize: 14,
             color: Colors.white,
@@ -84,11 +84,5 @@ class WeatherMainHeader extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  String formatDate(String inputDate) {
-    final dateTime = DateTime.parse(inputDate);
-    final formatter = DateFormat('EEEE, dd yyyy');
-    return formatter.format(dateTime);
   }
 }

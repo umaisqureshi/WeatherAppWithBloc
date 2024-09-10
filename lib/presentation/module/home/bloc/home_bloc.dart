@@ -24,6 +24,7 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
   final SelectedDayWeatherUseCase _currentWeatherUseCase;
   final WeeklyWeatherUseCase _weeklyWeatherUseCase;
   //Future feature
+  // ignore: unused_field
   final GetCitiesByQueryUseCase _citiesByQueryUseCase;
   final GetUserCurrentLocationUseCase _currentLocationUseCase;
   HomeBlocData blocData = const HomeBlocData();
