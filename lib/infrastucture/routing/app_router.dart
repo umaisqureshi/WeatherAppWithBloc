@@ -16,7 +16,7 @@ class AppRouter {
       goRouter = GoRouter(
         routes: <RouteBase>[
           GoRoute(
-              path: Routes.splash,
+              path: Routes.home,
               builder: (context, state) => routeFactory.create(context, state)),
         ],
       );

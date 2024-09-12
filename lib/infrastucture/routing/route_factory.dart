@@ -9,18 +9,18 @@ import 'route_screen_provider.dart';
 @lazySingleton
 class AppRouteFactory {
   final TransitionFactory transitionFactory;
-  final HomeRouteProvider splashRouteProvider;
+  final HomeRouteProvider homeRouteProvider;
   const AppRouteFactory({
-    required this.splashRouteProvider,
+    required this.homeRouteProvider,
     required this.transitionFactory,
   });
 
   Widget create(BuildContext context, GoRouterState state) {
-    final String path = state.path ?? Routes.splash;
+    final String path = state.path ?? Routes.home;
     final RouteScreenProvider provider;
 
-    if (path == Routes.splash) {
-      provider = splashRouteProvider;
+    if (path == Routes.home) {
+      provider = homeRouteProvider;
     } else {
       throw "invalid route, please prepare NOT FOUND page for this state";
     }

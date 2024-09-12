@@ -73,7 +73,7 @@ extension GetItInjectableX on _i1.GetIt {
           weeklyWeatherUseCase: gh<_i9.WeeklyWeatherUseCase>(),
         ));
     gh.lazySingleton<_i15.AppRouteFactory>(() => _i15.AppRouteFactory(
-          splashRouteProvider: gh<_i14.HomeRouteProvider>(),
+          homeRouteProvider: gh<_i14.HomeRouteProvider>(),
           transitionFactory: gh<_i4.TransitionFactory>(),
         ));
     gh.lazySingleton<_i16.AppRouter>(
